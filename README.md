@@ -12,9 +12,9 @@ In your html, include the script.
 
 Then use `<pre-markdown>` tags around your Markdown text.
 
-```
+```markdown
 <pre-markdown>
-#This will display as an h1 header
+# This will display as an h1 header
 
 This is some **bold** text, and this is *italics* _two ways_.
 
@@ -22,6 +22,18 @@ This is some **bold** text, and this is *italics* _two ways_.
 - List with a [link](https://duckduckgo.com/?q=commonmark)
 </pre-markdown>
 ```
+
+Which will render as:
+
+---
+# This will display as an h1 header
+
+This is some **bold** text, and this is *italics* _two ways_.
+
+- This is a list.
+- List with a [link](https://duckduckgo.com/?q=commonmark)
+---
+
 
 ### Options
 
@@ -41,12 +53,7 @@ All attributes are optional.
 
 ### Example:
 
-See the `/examples/` folder for more advanced usage.
-
-```html
-(A very basic web page that shows it working.)
-```
-
+See the `/examples/` folder for more robust usage.
 
 
 ## Compatibility
@@ -59,12 +66,15 @@ Roughly speaking `pre-markdown` is compatible with any browser that is capable o
 
 `<pre-markdown>` uses the [markdown-it](https://github.com/markdown-it/markdown-it) rendering engine which follows the [CommonMark specification](https://spec.commonmark.org/). Parsing uses the [markdown-it defaults](https://markdown-it.github.io/markdown-it/). See **Options** above for configuration options that have been surfaced.
 
-## License
-
+## Licenses
+```
 pre-markdown is MIT licensed.
 https://github.com/Grathio/pre-markdown
-Copyright 2020-2021 Steven Hoefer.
+Copyright © 2020-2021 Steven Hoefer.
+```
 
+```
 markdown-it is MIT licensed.
-Copyright (c) 2014 Vitaly Puzrin, Alex Kocharin.
+Copyright © 2014 Vitaly Puzrin, Alex Kocharin.
 https://github.com/markdown-it/markdown-it
+```
