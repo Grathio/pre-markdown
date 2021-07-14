@@ -1,0 +1,70 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<title>Basic </title>
+		<meta name="description" content="">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<link rel="stylesheet" href="css/page-style.css">
+	</head>
+	<body style="margin: 0; width: 100%; height: 100%; min-height: 0; min-width: 0;">
+		<h1>Basic Usage</h1>
+		<p>View source on the page to see the &lt;pre-markdown&gt; tag in action below.</p>
+		<p>A block of Markdown:</p>
+		<div style="margin: 0.5rem; padding: 0.5rem; border: 1px solid #ccc;">
+			<pre-markdown>
+## A Block Of Markdown With Default Settings:
+
+Uses the simple tag: `<pre-markdown>…(some markdown)…</pre-markdown>`
+
+This block is rendered with the default settings. <b>Inline HTML</b> is escaped, "quotes" are not made pretty,
+newlines are not turned into `<br>`s.
+The following link-like things are not turned into links: https://some.link some@email.address
+
+```html
+This is some <b>fenced code</b>.
+(HTML, really, not code, but anyway…)
+```
+
+### Lists:
+1. item one
+2. item two
+   - sublist
+   - sublist
+
+### Basic GitHub-flavored Markdown:
+
+| This is table!  | Another Header |
+| ------------- | ------------- |
+| Content Cell  | Content Cell  |
+| Content Cell  | Content Cell  |
+
+~~strikethrough~~ text.
+			</pre-markdown>
+		</div>
+		<p>A block of Markdown with different settings:</p>
+
+		<div style="margin: 0.5rem; padding: 0.5rem; border: 1px solid #ccc;">
+
+			<pre-markdown html="true" linkify="true" typographer="true" breaks="true">
+## A Block Of Markdown With Different Settings:
+
+This block uses the following markup:
+```html
+<pre-markdown html="true" linkify="true" typographer="true" breaks="true">
+	…(some markdown)…
+</pre-markdown>
+```
+
+This block is rendered with the default settings. <b>Inline HTML</b> is rendered, "quotes" are made pretty.
+Newlines in paragraphs are turned into `<br>`s.
+The following link-like things are turned into links: https://foo.bar.com foo@bar.com
+
+			</pre-markdown>
+		</div>
+
+		<script src="../pre-markdown.js"></script>
+	</body>
+</html>

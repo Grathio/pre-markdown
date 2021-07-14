@@ -1,0 +1,11 @@
+/*
+Style that can be imported and applied to a specific <pre-markdown> text.
+*/
+pre {
+	color:white;
+	background: blue;
+}
+
+h2 {
+border: 1px solid red;
+}

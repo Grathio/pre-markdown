@@ -1,0 +1,21 @@
+/* Styling for the page, not for <pre-markdown> content.
+
+However, any `inheritable` property will pass to the rendered Markdown.
+These include:
+- color
+- cursor
+- direction
+- font-*
+- letter-spacing
+- line-height
+- text-align
+- visibility
+And more. For a full list of inherited properties, see: https://www.w3.org/TR/CSS22/propidx.html
+
+
+*/
+html {
+  font-family: Lato, "Lucida Grande", Tahoma, Sans-Serif;
+  font-size: 16px;
+	margin: 0 15px;
+}
