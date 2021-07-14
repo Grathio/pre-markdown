@@ -1,2 +1,2 @@
 # pre-markdown
-Wrap Markdown text in &lt;pre-markdown> tags to render in the browser.
+Wrap Markdown text in `<pre-markdown>` tags to render in the browser.
