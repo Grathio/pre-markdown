@@ -64,14 +64,7 @@ Roughly speaking `pre-markdown` is compatible with any browser that is capable o
 
 ### Markdown
 
-`<pre-markdown>` uses the [markdown-it](https://github.com/markdown-it/markdown-it) rendering engine which follows the [CommonMark specification](https://spec.commonmark.org/). Parsing uses the [markdown-it defaults](https://markdown-it.github.io/markdown-it/). See **Options** above for configuration options that have been surfaced.
-
-## Known Issues
-
-Here are the known issues. Addressed in order of increasing importance and decreasing effort to fix.
-
-- `<blockquote>` not rendering correctly.
-  - More accurately >-fenced text is not rendering as <blockquote> elements. 
+`<pre-markdown>` uses the [markdown-it](https://github.com/markdown-it/markdown-it) rendering engine which follows the [CommonMark specification](https://spec.commonmark.org/). It's generally quiet compliant and fast. Parsing uses the [markdown-it defaults](https://markdown-it.github.io/markdown-it/). See [Options](#options) above for configuration options that have been surfaced.
 
 ## Licenses
 
