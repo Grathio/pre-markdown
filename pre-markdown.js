@@ -37,8 +37,8 @@ class PreMarkdown extends HTMLElement {
     // Bare minimum styling.
     this.styleContent = `
       pre, code {background-color: #eee; font-family: Consolas, monaco, monospace; padding: 2px;}
-      pre {padding: 0.5rem; max-width: 800px; white-space: pre-wrap;}
-      blockquote {padding: 10px 20px;margin: 0 0 20px;font-size: 1.2rem; border-left: 2px solid #eee; background-color: #eee;}
+      pre {padding: 0.5rem; max-width: 50rem; white-space: pre-wrap;}
+      blockquote{padding: 0.1rem 1rem; margin: 0 1rem 1rem 2rem; max-width: 47rem; font-size: 1.1rem; border-left: 2px solid #ccccce; background-color: #eee;}
       table {border-collapse: collapse; border: 1px solid #ccc;}
       table thead {background-color: #eee;}
       table thead tr th{border: 1px solid #ccc; padding: 0.5em 1em}
@@ -57,6 +57,7 @@ class PreMarkdown extends HTMLElement {
       render(this);
     }
 
+    /* Replace the markdown with HTML */
     function render(self){
       let style = document.createElement('style');
       style.textContent = self.styleContent;
@@ -78,8 +79,16 @@ class PreMarkdown extends HTMLElement {
         md.set({breaks: true});
       }
 
-  		let html = md.render(self.innerHTML);
+  		let html = md.render(preprocess(self.innerHTML));
   		self.shadowRoot.getElementById('pre-markdown').innerHTML = html;
+    }
+
+    /* Does preprocessing on MDtext so that it parses correctly. */
+    function preprocess(MDtext){
+      // Browsers will turn "> blockquote" into "&gt; blockquote" Turn them back so they parse correctly.
+      MDtext = MDtext.replace(/&gt;/g, '>'); 
+
+      return MDtext;
     }
 		
 	}
