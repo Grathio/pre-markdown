@@ -34,7 +34,16 @@ class PreMarkdown extends HTMLElement {
 			<div id="pre-markdown"></div>
 		`;
 
-    this.styleContent = 'pre {color:blue;}';
+    // Bare minimum styling.
+    this.styleContent = `
+      pre, code {background-color: #eee; font-family: Consolas, monaco, monospace; padding: 2px;}
+      pre {padding: 0.5rem; max-width: 800px; white-space: pre-wrap;}
+      blockquote {padding: 10px 20px;margin: 0 0 20px;font-size: 1.2rem; border-left: 2px solid #eee; background-color: #eee;}
+      table {border-collapse: collapse; border: 1px solid #ccc;}
+      table thead {background-color: #eee;}
+      table thead tr th{border: 1px solid #ccc; padding: 0.5em 1em}
+      table td {padding: 0.5em 1em; border: 1px solid #ccc;}
+    `;
 
     // Load external css.
     if (this.attributeCss){
