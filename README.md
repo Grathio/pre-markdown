@@ -4,10 +4,10 @@ Wrap Markdown text in `<pre-markdown>` tags to render in the browser.
 
 ## Usage
 
-In your html, include the script.
+In your html, include the script:
 
 ```html
-<script src="script/pre-markdown.js"></script>
+<script src="path/to/pre-markdown.js"></script>
 ```
 
 Then use `<pre-markdown>` tags around your Markdown text.
@@ -16,7 +16,7 @@ Then use `<pre-markdown>` tags around your Markdown text.
 <pre-markdown>
 # This will display as an h1 header
 
-This is some **bold** text, and this is *italics* _two ways_.
+This is some **bold** text, and this is *italics* in _two ways_.
 
 - This is a list.
 - List with a [link](https://duckduckgo.com/?q=commonmark)
@@ -66,7 +66,15 @@ Roughly speaking `pre-markdown` is compatible with any browser that is capable o
 
 `<pre-markdown>` uses the [markdown-it](https://github.com/markdown-it/markdown-it) rendering engine which follows the [CommonMark specification](https://spec.commonmark.org/). Parsing uses the [markdown-it defaults](https://markdown-it.github.io/markdown-it/). See **Options** above for configuration options that have been surfaced.
 
+## Known Issues
+
+Here are the known issues. Addressed in order of increasing importance and decreasing effort to fix.
+
+- `<blockquote>` not rendering correctly.
+  - More accurately >-fenced text is not rendering as <blockquote> elements. 
+
 ## Licenses
+
 ```
 pre-markdown is MIT licensed.
 https://github.com/Grathio/pre-markdown
