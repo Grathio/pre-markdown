@@ -23,7 +23,7 @@ This is some **bold** text, and this is *italics* in _two ways_.
 </pre-markdown>
 ```
 
-Which will render as:
+Which will render in the browser as:
 
 ---
 # This will display as an h1 header
@@ -40,6 +40,10 @@ This is some **bold** text, and this is *italics* _two ways_.
 Set any of the following attributes to change the default behavior. (eg `<pre-markdown html="true" linkify="true">`
 
 All attributes are optional.
+
+- `css` : Link to an external CSS file to apply to the Markdown block.
+
+  - Note that an external CSS file will completely override the built-in CSS.
 
 - `html` : Set this to render HTML tags inside the Markdown. *Default: unset. HTML is escaped.*
 
@@ -60,11 +64,11 @@ See the `/examples/` folder for more robust usage.
 
 ### Browser
 
-Roughly speaking `pre-markdown` is compatible with any browser that is capable of the `import` syntax. [compatibility chart](https://caniuse.com/es6-module-dynamic-import) This includes virtually every browser—desktop and mobile—that have had a release since 2019.
+Roughly speaking `pre-markdown` is compatible with any browser that is capable of the `import` syntax. [compatibility chart](https://caniuse.com/es6-module-dynamic-import) This includes virtually every browser—desktop and mobile—that has had a release since 2019.
 
 ### Markdown
 
-`<pre-markdown>` uses the [markdown-it](https://github.com/markdown-it/markdown-it) rendering engine which follows the [CommonMark specification](https://spec.commonmark.org/). It's generally quiet compliant and fast. Parsing uses the [markdown-it defaults](https://markdown-it.github.io/markdown-it/). See [Options](#options) above for configuration options that have been surfaced.
+`<pre-markdown>` uses the [markdown-it](https://github.com/markdown-it/markdown-it) rendering engine which follows the [CommonMark specification](https://spec.commonmark.org/). It's generally compliant and fast. Parsing uses the [markdown-it defaults](https://markdown-it.github.io/markdown-it/). See [Options](#options) above for configuration options.
 
 ## Licenses
 

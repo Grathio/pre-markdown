@@ -69,7 +69,7 @@ This block uses the following markup:
 </pre-markdown>
 ```
 
-This block is rendered with the default settings. <b>Inline HTML</b> is rendered, "quotes" are made pretty.
+This block is rendered with the default settings overridden. <b>Inline HTML</b> is rendered, "quotes" are made pretty.
 Strings like (c) and (r) are converted to entities.
 Newlines in paragraphs are turned into `<br>`s.
 The following link-like things are turned into links: https://foo.bar.com foo@bar.com
@@ -79,6 +79,33 @@ The following link-like things are turned into links: https://foo.bar.com foo@ba
 >
 > Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 
+			</pre-markdown>
+		</div>
+
+		<p>A block of in-line Markdown using an external CSS file. Different blocks can have different style sheets.</p>
+		<div style="margin: 0.5rem; padding: 0.5rem; border: 1px solid #ccc;">
+
+			<pre-markdown css="css/import-style.css">
+# A Block Of In-Line Markdown Using An External Style Sheet.
+
+This block uses the following markup:
+```html
+<pre-markdown css="css/import-style.css">
+	…(some markdown)…
+</pre-markdown>
+```
+
+This block is rendered using a simple external style sheet that mostly is just an inverse of the default styling.
+
+
+> **Blockquotes**
+>
+> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
+| Another Table  | Another Example |
+| ------------- | ------------- |
+| Content Cell  | Content Cell  |
+| Content Cell  | Content Cell  |
 			</pre-markdown>
 		</div>
 

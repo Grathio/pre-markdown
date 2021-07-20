@@ -16,6 +16,7 @@ This is some **Markdown** formatted _text_.
 </pre-markdown>
 
 Attributes:
+- css (string) : Link to an external style sheet. If given, the built-in styles are not applied. (Default: unset.)
 - html (string) : If set, HTML tags in the Markdown are rendered. Default: unset.
 - linkify (string) : If set, things that look like links are linked. Default: unset.
 - typographer (string) : If set, some language-neutral replacement and quote beautification. Default: unset.
@@ -25,7 +26,7 @@ class PreMarkdown extends HTMLElement {
 	
 	constructor(){
 		super();
-		this.attachShadow({mode: 'open'})
+		this.shadow = this.attachShadow({mode: 'open'})
 	}
 
 	connectedCallback(){
@@ -36,6 +37,7 @@ class PreMarkdown extends HTMLElement {
 
     // Bare minimum styling.
     this.styleContent = `
+      host: {display: block;}
       pre, code {background-color: #eee; font-family: Consolas, monaco, monospace; padding: 2px;}
       pre {padding: 0.5rem; max-width: 50rem; white-space: pre-wrap;}
       blockquote{padding: 0.1rem 1rem; margin: 0 1rem 1rem 2rem; max-width: 47rem; font-size: 1.1rem; border-left: 2px solid #ccccce; background-color: #eee;}
@@ -43,25 +45,24 @@ class PreMarkdown extends HTMLElement {
       table thead {background-color: #eee;}
       table thead tr th{border: 1px solid #ccc; padding: 0.5em 1em}
       table td {padding: 0.5em 1em; border: 1px solid #ccc;}
-    `;
+    `;  
 
     // Load external css.
-    if (this.attributeCss){
-      fetch(this.attributeCss)
-        .then(response => response.text())
-        .then(data => {
-          this.styleContent = data;
-          render(this);
-        });
-    } else {
+    if (this.attributeCss){ // use external CSS file.
+      const linkElem = document.createElement('link');
+      linkElem.setAttribute('rel', 'stylesheet');
+      linkElem.setAttribute('href', this.attributeCss);
+      this.shadow.appendChild(linkElem);
+      render(this);
+    } else { // No CSS specified, use built-in CSS.
+      let style = document.createElement('style');
+      style.textContent = this.styleContent;
+      this.shadowRoot.append(style);
       render(this);
     }
 
     /* Replace the markdown with HTML */
     function render(self){
-      let style = document.createElement('style');
-      style.textContent = self.styleContent;
-      self.shadowRoot.append(style);
 
   		self.shadowRoot.appendChild(template.content.cloneNode(true));
 
