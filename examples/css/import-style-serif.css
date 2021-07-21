@@ -1,0 +1,56 @@
+/*
+Example of a style that can be imported and applied to a specific <pre-markdown> text.
+
+This is mostly a serif version of the built-in style.
+*/
+
+
+:host {
+	display: block; /* without `display: block` non-block properties (like, for instance `background-color`) won't render.*/
+	font-family: Cambria, "Hoefler Text", Utopia, "Liberation Serif", "Nimbus Roman No9 L Regular", Times, "Times New Roman", serif;
+	padding: 0.1rem 1rem;
+}
+
+a, a:link {
+	color: #642;
+}
+pre, code {
+	background-color: #ffd;
+	font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+	padding: 2px;
+}
+pre {
+	border: 1px solid #eec;
+	border-radius: 0.4rem;
+}
+pre {
+	padding: 0.5rem;
+	max-width: 50rem;
+	white-space: pre-wrap;
+}
+blockquote{
+	padding: 0.1rem 1rem;
+	margin: 0 1rem 1rem 2rem;
+	max-width: 47rem;
+	font-size: 1.1rem;
+	background-color: #ffd;
+	border: 1px solid #eec;
+	border-radius: 0.4rem;
+	box-shadow: 10px 10px 10px 0px rgba(0, 0, 0, 0.3);
+}
+table {
+	border-collapse: collapse;
+	border: 1px solid #eec;
+}
+table thead {
+	background-color: #ffd;
+}
+table thead tr th{
+	border: 1px solid #eec;
+	border-bottom: 3px solid #eec;
+	padding: 0.5em 1em;
+}
+table td {
+	padding: 0.5em 1em;
+	border: 1px solid #eec;
+}

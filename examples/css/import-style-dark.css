@@ -1,7 +1,7 @@
 /*
 Example of a style that can be imported and applied to a specific <pre-markdown> text.
 
-This is mostly a dark version of the built-in styling.
+This is mostly a dark version of the built-in style.
 */
 
 
@@ -12,6 +12,9 @@ This is mostly a dark version of the built-in styling.
 	padding: 0.1rem 1rem;
 }
 
+a, a:link {
+	color: #69f;
+}
 pre, code {
 	background-color: #333;
 	font-family: ui-monospace, SFMono-Regular, SF Mono, Consolas, Liberation Mono, Menlo, monospace;
