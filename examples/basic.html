@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-		<title>Basic </title>
+		<title>Basic</title>
 		<meta name="description" content="">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<meta name="apple-mobile-web-app-capable" content="yes">
@@ -12,16 +12,18 @@
 	<body style="margin: 0; width: 100%; height: 100%; min-height: 0; min-width: 0;">
 		<h1>Basic Usage</h1>
 		<p>View source on the page to see the &lt;pre-markdown&gt; tag in action below.</p>
-		<p>A block of in-line Markdown:</p>
+		<p>A block of in-line Markdown with the default options:</p>
 		<div style="margin: 0.5rem; padding: 0.5rem; border: 1px solid #ccc;">
 			<pre-markdown>
 # A Block Of In-Line Markdown With Default Settings:
 
 Uses the simple tag: `<pre-markdown>…(some markdown)…</pre-markdown>`
 
+> **The text below is not a comprehensive example of Markdown, just and example to show general rendering.**
+
 This block is rendered with the default settings. <b>Inline HTML</b> is escaped, "quotes" are not made pretty,
 strings like (c) and (r) are not converted to entities,
-newlines are not turned into `<br>`s.
+newlines inside of paragraphs are not turned into `<br>`s.
 The following link-like things are not turned into links: https://some.link some@email.address
 
 ```html
@@ -30,11 +32,16 @@ This is some <b>fenced code</b>.
 ```
 
 ### Lists:
-1. item one
-2. item two
-   - sublist
-   - sublist
+- This is a list
+	- An item in a list.
+	- Another item in a list.
+	- This is a list item with [a link](https://duckduckgo.com/?q=commonmark)
 
+1. This is an ordered list
+	1. This is a subitem.
+	2. Another subitem.
+2. Back to the top level.
+	1. This one has a [reference-style link][1]
 
 > **Blockquotes**
 >
@@ -45,67 +52,14 @@ This is some <b>fenced code</b>.
 Horizontal rules
 ***
 
-### Basic GitHub-flavored Markdown:
-
 | This is table!  | Another Header |
 | ------------- | ------------- |
 | Content Cell  | Content Cell  |
 | Content Cell  | Content Cell  |
 
 ~~strikethrough~~ text.
-			</pre-markdown>
-		</div>
-		<p>A block of in-line Markdown with different settings:</p>
 
-		<div style="margin: 0.5rem; padding: 0.5rem; border: 1px solid #ccc;">
-
-			<pre-markdown html="true" linkify="true" typographer="true" breaks="true">
-# A Block Of In-Line Markdown With Different Settings:
-
-This block uses the following markup:
-```html
-<pre-markdown html="true" linkify="true" typographer="true" breaks="true">
-	…(some markdown)…
-</pre-markdown>
-```
-
-This block is rendered with the default settings overridden. <b>Inline HTML</b> is rendered, "quotes" are made pretty.
-Strings like (c) and (r) are converted to entities.
-Newlines in paragraphs are turned into `<br>`s.
-The following link-like things are turned into links: https://foo.bar.com foo@bar.com
-
-
-> **Blockquotes**
->
-> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-
-			</pre-markdown>
-		</div>
-
-		<p>A block of in-line Markdown using an external CSS file. Different blocks can have different style sheets.</p>
-		<div style="margin: 0.5rem; padding: 0.5rem; border: 1px solid #ccc;">
-
-			<pre-markdown css="css/import-style.css">
-# A Block Of In-Line Markdown Using An External Style Sheet.
-
-This block uses the following markup:
-```html
-<pre-markdown css="css/import-style.css">
-	…(some markdown)…
-</pre-markdown>
-```
-
-This block is rendered using a simple external style sheet that mostly is just an inverse of the default styling.
-
-
-> **Blockquotes**
->
-> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-
-| Another Table  | Another Example |
-| ------------- | ------------- |
-| Content Cell  | Content Cell  |
-| Content Cell  | Content Cell  |
+[1]: https://commonmark.org/help/
 			</pre-markdown>
 		</div>
 
