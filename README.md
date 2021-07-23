@@ -1,10 +1,12 @@
 # `<pre-markdown>`
 
-Wrap Markdown text in `<pre-markdown>` tags to render in the browser.
+Easily convert Markdown text to HTML in browser and embed external Markdown in a page with a simple`<pre-markdown>` tag.
 
 ## Usage
 
-In your html, include the script:
+### In-Page Markdown
+
+In your html, include the script (usually near the bottom, just before the `</body>` tag):
 
 ```html
 <script src="path/to/pre-markdown.js"></script>
@@ -34,6 +36,20 @@ This is some **bold** text, and this is *italics* _two ways_.
 - List with a [link](https://duckduckgo.com/?q=commonmark)
 ---
 
+### Using external Markdown files.
+In your html, include the script (usually near the bottom, just before the `</body>` tag):
+
+```html
+<script src="path/to/pre-markdown.js"></script>
+```
+
+Then set the `src` attribute in a`<pre-markdown>` tag.
+
+```markdown
+<pre-markdown src="my/markdown.md"></pre-markdown>
+```
+
+The Markdown file will be loaded, converted to HTML and embedded in your page.
 
 ### Options
 
@@ -41,23 +57,17 @@ Set any of the following attributes to change the default behavior. (eg `<pre-ma
 
 All attributes are optional.
 
+- `src` : Link to an external Markdown file that will replace any content in the block.
 - `css` : Link to an external CSS file to apply to the Markdown block.
-
-  - Note that an external CSS file will completely override the built-in CSS.
-
+  - Note: Effects of the external CSS is isolated to the block of Markdown and will completely override the built-in Markdown style.
 - `html` : Set this to render HTML tags inside the Markdown. *Default: unset. HTML is escaped.*
-
 - `linkify` : Set this to turn link-like things into links. (web addresses, emails, etc.) *Default: unset. URLS are unchanged.*
-
 - `typographer` : Set this to do some language-neutral replacement and make quotes pretty. *Default: unset. Quotes are unchanged.*
-
 - `breaks` : Set this to turn newlines (`\n`) within paragraphs into `<br>` tags. *Default: Unset. Single line breaks within a paragraph are ignored.*
-
-  
 
 ### Example:
 
-See the `/examples/` folder for more robust usage.
+See the `/examples/` folder for usage.
 
 
 ## Compatibility

@@ -17,6 +17,7 @@ This is some **Markdown** formatted _text_.
 
 Attributes:
 - css (string) : Link to an external style sheet. If given, the built-in styles are not applied. (Default: unset.)
+- src (string) : Link to an external Markdown file. If given, it will overwrite any exiting content inside the flags.
 - html (string) : If set, HTML tags in the Markdown are rendered. Default: unset.
 - linkify (string) : If set, things that look like links are linked. Default: unset.
 - typographer (string) : If set, some language-neutral replacement and quote beautification. Default: unset.
@@ -29,68 +30,95 @@ class PreMarkdown extends HTMLElement {
 		this.shadow = this.attachShadow({mode: 'open'})
 	}
 
-	connectedCallback(){
+	async connectedCallback(){
+		this.markdownContent = '';
+
 		const template = document.createElement('template');
 		template.innerHTML = `
 			<div id="pre-markdown"></div>
 		`;
 
-    // Bare minimum styling.
-    this.styleContent = `
-      host: {display: block;}
-      pre, code {background-color: #eee; font-family: Consolas, monaco, monospace; padding: 2px;}
-      pre {padding: 0.5rem; max-width: 50rem; white-space: pre-wrap;}
-      blockquote{padding: 0.1rem 1rem; margin: 0 1rem 1rem 2rem; max-width: 47rem; font-size: 1.1rem; border-left: 2px solid #ccccce; background-color: #eee;}
-      table {border-collapse: collapse; border: 1px solid #ccc;}
-      table thead {background-color: #eee;}
-      table thead tr th{border: 1px solid #ccc; padding: 0.5em 1em}
-      table td {padding: 0.5em 1em; border: 1px solid #ccc;}
-    `;  
+		// Bare minimum styling.
+		this.styleContent = `
+			host: {display: block;}
+			pre, code {background-color: #eee; font-family: Consolas, monaco, monospace; padding: 2px;}
+			pre {padding: 0.5rem; max-width: 50rem; white-space: pre-wrap;}
+			blockquote{padding: 0.1rem 1rem; margin: 0 1rem 1rem 2rem; max-width: 47rem; font-size: 1.1rem; border-left: 2px solid #ccccce; background-color: #eee;}
+			table {border-collapse: collapse; border: 1px solid #ccc;}
+			table thead {background-color: #eee;}
+			table thead tr th{border: 1px solid #ccc; padding: 0.5em 1em}
+			table td {padding: 0.5em 1em; border: 1px solid #ccc;}
+		`;
 
-    // Load external css.
-    if (this.attributeCss){ // use external CSS file.
-      const linkElem = document.createElement('link');
-      linkElem.setAttribute('rel', 'stylesheet');
-      linkElem.setAttribute('href', this.attributeCss);
-      this.shadow.appendChild(linkElem);
-      render(this);
-    } else { // No CSS specified, use built-in CSS.
-      let style = document.createElement('style');
-      style.textContent = this.styleContent;
-      this.shadowRoot.append(style);
-      render(this);
-    }
+		// Load external Markdown.
+		if (this.attributeSource){
+			try {
+				this.markdownContent = await getMarkdown(this.attributeSource);
+			} catch (error){
+				console.error(error);
+				this.markdownContent = 'Content not found';
+			}
+			getCSS(this);
+		} else {
+			this.markdownContent = this.innerHTML;
+			getCSS(this);
+		}
 
-    /* Replace the markdown with HTML */
-    function render(self){
 
-  		self.shadowRoot.appendChild(template.content.cloneNode(true));
+		function getCSS(self){
+			// Use external css.
+			if (self.attributeCss){
+				const linkElem = document.createElement('link');
+				linkElem.setAttribute('rel', 'stylesheet');
+				linkElem.setAttribute('href', self.attributeCss);
+				self.shadow.appendChild(linkElem);
+				render(self);
+			} else { // No CSS specified, use built-in CSS.
+				let style = document.createElement('style');
+				style.textContent = self.styleContent;
+				self.shadowRoot.append(style);
+				render(self);
+			}
+		}
 
-      var md = window.markdownit();
-      if (self.attributeHtml){
-        md.set({html: true});
-      }
-      if (self.attributeLinkify){
-        md.set({linkify: true});
-      }
-      if (self.attributeTypographer){
-        md.set({typographer: true});
-      }
-      if (self.attributeBreaks){
-        md.set({breaks: true});
-      }
+		/* Replace the markdown with HTML */
+		function render(self){
 
-  		let html = md.render(preprocess(self.innerHTML));
-  		self.shadowRoot.getElementById('pre-markdown').innerHTML = html;
-    }
+			self.shadowRoot.appendChild(template.content.cloneNode(true));
 
-    /* Does preprocessing on MDtext so that it parses correctly. */
-    function preprocess(MDtext){
-      // Browsers will turn "> blockquote" into "&gt; blockquote" Turn them back so they parse correctly.
-      MDtext = MDtext.replace(/&gt;/g, '>'); 
+			var md = window.markdownit();
+			if (self.attributeHtml){
+				md.set({html: true});
+			}
+			if (self.attributeLinkify){
+				md.set({linkify: true});
+			}
+			if (self.attributeTypographer){
+				md.set({typographer: true});
+			}
+			if (self.attributeBreaks){
+				md.set({breaks: true});
+			}
 
-      return MDtext;
-    }
+			let html = md.render(preprocess(self.markdownContent));
+			self.shadowRoot.getElementById('pre-markdown').innerHTML = html;
+		}
+
+		/* Does preprocessing on MDtext so that it parses correctly. */
+		function preprocess(MDtext){
+			// Browsers will turn "> blockquote" into "&gt; blockquote" Turn them back so they parse correctly.
+			MDtext = MDtext.replace(/&gt;/g, '>'); 
+
+			return MDtext;
+		}
+
+		async function getMarkdown(filename) {
+			const response = await fetch(filename);
+			if (!response.ok){
+				throw Error('HTTP Error ' + response.status);
+			}
+			return await response.text();
+		}
 		
 	}
 
@@ -99,15 +127,16 @@ class PreMarkdown extends HTMLElement {
 	}
 
 	static get observedAttributes(){
-		return ['css', 'html', 'linkify', 'typographer', 'breaks'];
+		return ['src', 'css', 'html', 'linkify', 'typographer', 'breaks'];
 	}
 
 	attributeChangedCallback(name, oldValue, newValue){
-    this.attributeCss = this.getAttribute('css') || '';
-    this.attributeHtml = this.getAttribute('html') || '';
-    this.attributeLinkify = this.getAttribute('linkify') || '';
-    this.attributeTypographer = this.getAttribute('typographer') || '';
-    this.attributeBreaks = this.getAttribute('breaks') || '';
+		this.attributeSource = this.getAttribute('src') || '';
+		this.attributeCss = this.getAttribute('css') || '';
+		this.attributeHtml = this.getAttribute('html') || '';
+		this.attributeLinkify = this.getAttribute('linkify') || '';
+		this.attributeTypographer = this.getAttribute('typographer') || '';
+		this.attributeBreaks = this.getAttribute('breaks') || '';
 	}
 }
 customElements.define('pre-markdown', PreMarkdown);
