@@ -8,7 +8,7 @@ See: `/examples/markdown-example.md`
 
 This file is embedded in the page using the tag:
 ```
-<pre-markdown src="markdown-example-1.md"></pre-markdown>
+<pre-markdown src="markdown-example.md"></pre-markdown>
 ```
 
 By default, paragraphs are separated
