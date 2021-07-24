@@ -1,0 +1,149 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<title>Scripting</title>
+		<meta name="description" content="">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<link rel="stylesheet" href="css/page-style.css">
+	</head>
+	<body style="margin: 0; width: 100%; height: 100%; min-height: 0; min-width: 0;">
+		<h1>Scripting</h1>
+		<p>Some examples of using JavaScript to dynamically control &lt;pre-markdown&gt; content.</p>
+		<p>View source on the page to see the scripts</p>
+
+		<div>
+			<h3>A live Markdown Editor in just a few lines.</h3>
+
+			<div style="float: left; width: 48%; min-width: 350px;">
+				<textarea id="editorSource" placeholder="Enter Markdown here" style="width: 100%; height: 25rem;">
+# Live editor
+
+Write **Markdown** here and it will be rendered in the preview window as you type.
+
+- List item 1
+- List item 2
+
+> Blockquoted text.
+> In-paragraph link breaks
+> are ignored by default.
+
+**bold**, *italic* and a [link](#)
+
+```
+Fenced code block
+```
+
+"Fancy" typography is off by default (r)(tm).
+
+HTML rendering is <b>ignored</b> by default.
+
+Linkifying link-like things is off by default: example.com
+</textarea>
+			</div>
+			<div style="float: right; width: 48%; min-width: 350px; border: 1px solid #ccc; padding: 0.5rem;">
+				<pre-markdown id="editorDestination"></pre-markdown>
+			</div>
+
+		</div>
+
+
+		<div style="clear: both;">
+			<h3>Change other attributes:</h3>
+			<button id="buttonStyleDark">Dark style</button>
+			<button id="buttonStyleSerif">Serif style</button>
+			<button id="buttonStyleDefault">Default style</button><br>
+			<input type="checkbox" id="optionHTML" name="optionHTML">
+  				<label for="optionHTML">Render HTML tags.</label>
+  			</input><br>
+			<input type="checkbox" id="optionLinkify" name="optionLinkify">
+  				<label for="optionLinkify">Automatically create links for URLS, email addresses.</label>
+  			</input><br>
+			<input type="checkbox" id="optionTypographer" name="optionTypographer">
+  				<label for="optionTypographer">Enable typography for quotes and other entities.</label>
+  			</input><br>
+			<input type="checkbox" id="optionBreaks" name="optionBreaks">
+  				<label for="optionBreaks">Convert in-paragraph newlines into &lt;br&gt; tags.</label>
+  			</input>
+		</div>
+		<script src="../pre-markdown.js"></script>
+		<script>
+			/* Scripts for working with <pre-markdown> */
+
+			// Initialize things when the page is loaded.
+			window.addEventListener('load', init);
+
+			function init(){
+				editorInit();
+				optionsInit();
+			}
+
+			/* Initialize the quick and dirty Markdown editor
+
+			Note:
+			This is very aggressive rendering on every keypress, which can really eat CPU
+			on longer documents. A better solution would be to periodically poll the text area
+			for changes.
+			*/
+			function editorInit(){
+
+				let editorSource = document.getElementById('editorSource');
+				let editorDestination = document.getElementById('editorDestination');
+
+				editorSource.addEventListener('keyup', updateDestination);
+
+				updateDestination(); // Trigger to push the initial content to the preview.
+
+				function updateDestination(){
+				  editorDestination.setAttribute('markdown', editorSource.value);
+				}
+			}
+
+			/** Listen for button and checkbox changes.*/
+			function optionsInit(){
+				// Style buttons
+				document.getElementById('buttonStyleDark').addEventListener('click', ()=>{
+					document.getElementById('editorDestination').setAttribute('css', 'css/import-style-dark.css');
+				});
+				document.getElementById('buttonStyleSerif').addEventListener('click', ()=>{
+					document.getElementById('editorDestination').setAttribute('css', 'css/import-style-serif.css');
+				});
+				document.getElementById('buttonStyleDefault').addEventListener('click', ()=>{
+					document.getElementById('editorDestination').setAttribute('css', '');
+				});
+
+				// Formatting checkboxes:
+				document.getElementById('optionHTML').addEventListener('change', (event)=>{
+					if (event.currentTarget.checked) {
+						document.getElementById('editorDestination').setAttribute('html', 'true');
+					} else {
+						document.getElementById('editorDestination').setAttribute('html', '');
+					}
+				});
+				document.getElementById('optionLinkify').addEventListener('change', (event)=>{
+					if (event.currentTarget.checked) {
+						document.getElementById('editorDestination').setAttribute('linkify', 'true');
+					} else {
+						document.getElementById('editorDestination').setAttribute('linkify', '');
+					}
+				});
+				document.getElementById('optionTypographer').addEventListener('change', (event)=>{
+					if (event.currentTarget.checked) {
+						document.getElementById('editorDestination').setAttribute('typographer', 'true');
+					} else {
+						document.getElementById('editorDestination').setAttribute('typographer', '');
+					}
+				});
+				document.getElementById('optionBreaks').addEventListener('change', (event)=>{
+					if (event.currentTarget.checked) {
+						document.getElementById('editorDestination').setAttribute('breaks', 'true');
+					} else {
+						document.getElementById('editorDestination').setAttribute('breaks', '');
+					}
+				});
+			}
+		</script>
+	</body>
+</html>
