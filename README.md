@@ -64,6 +64,8 @@ All attributes are optional.
 - `linkify` : Set this to turn link-like things into links. (web addresses, emails, etc.) *Default: unset. URLS are unchanged.*
 - `typographer` : Set this to do some language-neutral replacement and make quotes pretty. *Default: unset. Quotes are unchanged.*
 - `breaks` : Set this to turn newlines (`\n`) within paragraphs into `<br>` tags. *Default: Unset. Single line breaks within a paragraph are ignored.*
+- `markdown` : Set  the markdown content.
+  - NOTE: For in-page Markdown, put it inside the `<pre-markdown>` tag or use the `src` attribute. This is intended only to dynamically update the content via `Element.setAttribute()` (See: `/examples/scripting.html`)
 
 ### Example:
 

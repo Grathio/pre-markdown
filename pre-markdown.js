@@ -18,6 +18,7 @@ This is some **Markdown** formatted _text_.
 Attributes:
 - css (string) : Link to an external style sheet. If given, the built-in styles are not applied. (Default: unset.)
 - src (string) : Link to an external Markdown file. If given, it will overwrite any exiting content inside the flags.
+- markdown (string) : An alternate way to set the content. If set it overwrites anything enclosed in the tag. (Intended to be used by Element.setAttribute() to dynamically change content.)
 - html (string) : If set, HTML tags in the Markdown are rendered. Default: unset.
 - linkify (string) : If set, things that look like links are linked. Default: unset.
 - typographer (string) : If set, some language-neutral replacement and quote beautification. Default: unset.
@@ -50,8 +51,14 @@ class PreMarkdown extends HTMLElement {
 			table td {padding: 0.5em 1em; border: 1px solid #ccc;}
 		`;
 
-		// Load external Markdown.
-		if (this.attributeSource){
+		// Get the markdown content, in this order of precedence:
+		// 1. Contents of `markdown` attribute, if set.
+		// 2. Contents of `src` file, if set.
+		// 3. innerHTML of the tag.
+		if (this.attributeMarkdown){
+			this.markdownContent = this.attributeMarkdown;
+			getCSS(this);
+		} else if (this.attributeSource){
 			try {
 				this.markdownContent = await getMarkdown(this.attributeSource);
 			} catch (error){
@@ -66,12 +73,16 @@ class PreMarkdown extends HTMLElement {
 
 
 		function getCSS(self){
+			// Remove any old style sheets we might have loaded.
+			if (self.cssLink){
+				self.cssLink.remove();
+			}
 			// Use external css.
 			if (self.attributeCss){
-				const linkElem = document.createElement('link');
-				linkElem.setAttribute('rel', 'stylesheet');
-				linkElem.setAttribute('href', self.attributeCss);
-				self.shadow.appendChild(linkElem);
+				self.linkElem = document.createElement('link');
+				self.linkElem.setAttribute('rel', 'stylesheet');
+				self.linkElem.setAttribute('href', self.attributeCss);
+				self.cssLink = self.shadow.appendChild(self.linkElem);
 				render(self);
 			} else { // No CSS specified, use built-in CSS.
 				let style = document.createElement('style');
@@ -127,16 +138,19 @@ class PreMarkdown extends HTMLElement {
 	}
 
 	static get observedAttributes(){
-		return ['src', 'css', 'html', 'linkify', 'typographer', 'breaks'];
+		return ['src', 'markdown', 'css', 'html', 'linkify', 'typographer', 'breaks'];
 	}
 
 	attributeChangedCallback(name, oldValue, newValue){
 		this.attributeSource = this.getAttribute('src') || '';
+		this.attributeMarkdown = this.getAttribute('markdown') || '';
 		this.attributeCss = this.getAttribute('css') || '';
 		this.attributeHtml = this.getAttribute('html') || '';
 		this.attributeLinkify = this.getAttribute('linkify') || '';
 		this.attributeTypographer = this.getAttribute('typographer') || '';
 		this.attributeBreaks = this.getAttribute('breaks') || '';
+
+		this.connectedCallback(); // Re-render any changes.
 	}
 }
 customElements.define('pre-markdown', PreMarkdown);
