@@ -1,5 +1,8 @@
 # `<pre-markdown>`
 
+> ⚠️ Note 2024-9-3: **This project has been archived on GitHub and moved to my personal repository at [https://code.grathio.com](https://code.grathio.com). Please update your references as this repository will eventually be removed.**
+>  ⚠️ 
+
 A web component to quickly include Markdown content in a page and have it rendered as HTML.
 
 ![Screenshot](examples/image/docs-input-output.png "HTML page source on the left, rendered HTML on the right.")
